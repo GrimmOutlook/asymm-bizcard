@@ -1,0 +1,11 @@
+{
+  "name": "businesscard",
+  "version": "1.0.0",
+  "description": "Business card parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David C. Grimm",
+  "license": "ISC"
+}
