@@ -55,8 +55,8 @@ const getPhoneNumber = contactInfo => {
 
     const possiblePhone = contactInfo.filter(item => regexPhonePattern.test(item));
 
-    const regexFax = new RegExp(/^fax|^fx|^f/i)
-    const phoneFormatted = possiblePhone.filter(item => !regexFax.test(item))
+    const regexFax = new RegExp(/^fax|^fx|^f/i);
+    const phoneFormatted = possiblePhone.filter(item => !regexFax.test(item));
 
     const phone = phoneFormatted.join();
 
