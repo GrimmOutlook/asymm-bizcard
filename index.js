@@ -1,4 +1,5 @@
 const readline = require('readline');
+const chalk = require('chalk');
 
 const input = [];
 
@@ -7,18 +8,22 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+rl.setPrompt(chalk.red.bold.underline('Enter business card information:'));
 rl.prompt();
 
-rl.on('line', cmd => input.push(cmd));
+rl.on('line', cmd => input.push(cmd.trim()));
 
 rl.on('close', () => {
-    const name = getName(input);
-    const phone = getPhoneNumber(input);
-    const email = getEmailAddress(input);
+    const inputTrimmed = input.filter(i => i != '');
 
-    console.log('Name: ', name);
-    console.log('Phone: ', phone);
-    console.log('Email: ', email);
+    const name = getName(inputTrimmed);
+    const phone = getPhoneNumber(inputTrimmed);
+    const email = getEmailAddress(inputTrimmed);
+
+    console.log(chalk.inverse('Here is your contact information:'));
+    console.log(chalk.green.underline('Name:'), name);
+    console.log(chalk.green.underline('Phone:'), phone);
+    console.log(chalk.green.underline('Email:'), email);
 
     process.exit(0);
 });
@@ -36,13 +41,13 @@ const getName = contactInfo => {
         }
         return;
     });
-    return name;
+    return name ? name : chalk.bgRed.bold('No name found.');
 };
 
 const getEmailAddress = contactInfo => {
     const regex = new RegExp('@');
     const email = contactInfo.find(item => regex.test(item));
-    return email ? email : 'No e-mail found';
+    return email ? email : chalk.bgRed.bold('No e-mail address found.');
 };
 
 const getPhoneNumber = contactInfo => {
@@ -56,5 +61,5 @@ const getPhoneNumber = contactInfo => {
     const phone = phoneFormatted.join();
 
     // Strips all non-numeric characters from string:
-    return phone.replace(/\D/g,'');
+    return phone ? phone.replace(/\D/g,'') : chalk.bgRed.bold('No phone number found.');
 };
